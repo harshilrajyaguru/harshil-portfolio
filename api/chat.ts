@@ -25,6 +25,33 @@ function checkResumeFileExists(): boolean {
   return false;
 }
 
+// Load environment variables server-side from .env.local / .env if not already present
+function loadLocalEnv(): void {
+  const envFiles = ['.env.local', '.env'];
+  for (const file of envFiles) {
+    const envPath = path.join(process.cwd(), file);
+    if (fs.existsSync(envPath)) {
+      try {
+        const content = fs.readFileSync(envPath, 'utf8');
+        for (const line of content.split('\n')) {
+          const trimmed = line.trim();
+          if (!trimmed || trimmed.startsWith('#')) continue;
+          const eqIdx = trimmed.indexOf('=');
+          if (eqIdx !== -1) {
+            const key = trimmed.slice(0, eqIdx).trim();
+            const val = trimmed.slice(eqIdx + 1).trim().replace(/^["']|["']$/g, '');
+            if (key && (!process.env[key] || process.env[key]?.trim() === '')) {
+              process.env[key] = val;
+            }
+          }
+        }
+      } catch {
+        // ignore
+      }
+    }
+  }
+}
+
 interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
@@ -147,7 +174,8 @@ export default async function handler(req: any, res: any) {
     .map((sec) => `### SECTION: ${sec.title} (${sec.topic})\n${sec.content.trim()}`)
     .join('\n\n');
 
-  // Verify server environment variable for Groq API
+  // Verify server environment variable for Groq API from environment or .env.local
+  loadLocalEnv();
   const apiKey = process.env.GROQ_API_KEY;
   const modelName = process.env.GROQ_MODEL || 'openai/gpt-oss-20b';
 
