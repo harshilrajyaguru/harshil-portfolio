@@ -1,0 +1,237 @@
+@import './tokens.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--bg-canvas);
+  color: var(--text-main);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-canvas);
+  color: var(--text-main);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Mint canvas with subtle neo-brutalist dot/grid overlay */
+.mint-canvas {
+  background-color: var(--bg-canvas);
+  background-image: 
+    radial-gradient(rgba(18, 24, 38, 0.08) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  min-height: 100vh;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-main);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* Neo-Brutalist Components */
+.neo-box {
+  background-color: var(--bg-surface);
+  border: var(--border-width) solid var(--border-dark);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-tactile);
+}
+
+.neo-box:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translate(-2px, -2px);
+}
+
+.neo-box-static {
+  background-color: var(--bg-surface);
+  border: var(--border-width) solid var(--border-dark);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+/* Neo-Brutalist Buttons */
+.neo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.75rem 1.4rem;
+  border: var(--border-width) solid var(--border-dark);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition-tactile);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.neo-btn-primary {
+  background-color: var(--bg-yellow);
+  color: var(--text-main);
+  box-shadow: var(--shadow-md);
+}
+
+.neo-btn-primary:hover {
+  background-color: var(--bg-yellow-hover);
+  box-shadow: var(--shadow-lg);
+  transform: translate(-2px, -2px);
+}
+
+.neo-btn-primary:active {
+  box-shadow: var(--shadow-sm);
+  transform: translate(2px, 2px);
+}
+
+.neo-btn-secondary {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  box-shadow: var(--shadow-md);
+}
+
+.neo-btn-secondary:hover {
+  background-color: var(--bg-surface-alt);
+  box-shadow: var(--shadow-lg);
+  transform: translate(-2px, -2px);
+}
+
+.neo-btn-secondary:active {
+  box-shadow: var(--shadow-sm);
+  transform: translate(2px, 2px);
+}
+
+.neo-btn-lilac {
+  background-color: var(--bg-lilac);
+  color: var(--text-main);
+  box-shadow: var(--shadow-md);
+}
+
+.neo-btn-lilac:hover {
+  background-color: var(--bg-lilac-dark);
+  box-shadow: var(--shadow-lg);
+  transform: translate(-2px, -2px);
+}
+
+.neo-btn-lilac:active {
+  box-shadow: var(--shadow-sm);
+  transform: translate(2px, 2px);
+}
+
+.neo-btn-ghost {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  box-shadow: none;
+  padding: 0.5rem 0.75rem;
+}
+
+.neo-btn-ghost:hover {
+  background-color: rgba(18, 24, 38, 0.05);
+  border-radius: var(--radius-sm);
+}
+
+/* Neo Badges & Pills */
+.neo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-full);
+  box-shadow: 2px 2px 0px var(--border-dark);
+}
+
+.neo-badge-lilac {
+  background-color: var(--bg-lilac);
+  color: var(--text-main);
+}
+
+.neo-badge-yellow {
+  background-color: var(--bg-yellow);
+  color: var(--text-main);
+}
+
+.neo-badge-white {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+}
+
+.neo-badge-green {
+  background-color: #A7F3D0;
+  color: #064E3B;
+}
+
+/* Section Title Dividers (matching the reference — About Me —, — Skills & Tools —) */
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 3.5rem 0 2rem 0;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  height: 2px;
+  width: 40px;
+  background-color: var(--border-dark);
+  opacity: 0.6;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-main);
+  text-transform: capitalize;
+}
+
+/* Hand-drawn style annotations */
+.hand-annotation {
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
+  color: var(--text-main);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Container constraints */
+.content-container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-lilac-dark);
+  border: 2px solid var(--border-dark);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-yellow);
+}

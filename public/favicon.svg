@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#FFB800" stroke="#121826" stroke-width="4"/>
+  <rect x="8" y="8" width="52" height="52" rx="12" fill="none" stroke="#121826" stroke-width="1" opacity="0.3"/>
+  <text x="32" y="42" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="900" fill="#121826" text-anchor="middle">HR</text>
+</svg>

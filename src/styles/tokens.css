@@ -1,0 +1,42 @@
+:root {
+  /* Colors */
+  --bg-canvas: #CEEBD9;
+  --bg-canvas-subtle: #D8EFE1;
+  --bg-surface: #FFFFFF;
+  --bg-surface-alt: #F9FAFB;
+  --bg-lilac: #DDD6FE;
+  --bg-lilac-dark: #C4B5FD;
+  --bg-lilac-subtle: #EDE9FE;
+  --bg-yellow: #FFB800;
+  --bg-yellow-hover: #F0AC00;
+  --bg-green-cta: #26734D;
+  --bg-green-cta-dark: #1E5C3D;
+  --text-main: #121826;
+  --text-muted: #4B5563;
+  --text-inverse: #FFFFFF;
+  --border-dark: #121826;
+  --border-width: 2.5px;
+
+  /* Shadows */
+  --shadow-sm: 2px 2px 0px var(--border-dark);
+  --shadow-md: 4px 4px 0px var(--border-dark);
+  --shadow-lg: 6px 6px 0px var(--border-dark);
+  --shadow-xl: 8px 8px 0px var(--border-dark);
+
+  /* Border Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Fonts */
+  --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Syne', 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-hand: 'Caveat', cursive, sans-serif;
+
+  /* Transitions */
+  --transition-tactile: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
