@@ -105,6 +105,7 @@ export const SkillsSection: React.FC = () => {
                 <div
                   key={category.id}
                   onClick={() => setActiveCategoryId(category.id)}
+                  className="skill-cat-card"
                   style={{
                     backgroundColor: isSelected ? '#FFFFFF' : 'transparent',
                     border: isSelected ? '2.5px solid var(--border-dark)' : '2px dashed rgba(18,24,38,0.25)',
@@ -161,6 +162,7 @@ export const SkillsSection: React.FC = () => {
           {/* Right Column: Chunky Lilac Skill Tiles (Matching reference layout) */}
           <div>
             <div
+              className="skills-tiles-grid"
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))',
@@ -172,6 +174,7 @@ export const SkillsSection: React.FC = () => {
                 return (
                   <div
                     key={skill.name}
+                    className="skill-tile"
                     style={{
                       backgroundColor: 'var(--bg-lilac)',
                       border: '2.5px solid var(--border-dark)',
@@ -262,6 +265,30 @@ export const SkillsSection: React.FC = () => {
           .skills-grid {
             grid-template-columns: 1fr !important;
             gap: 2rem !important;
+          }
+        }
+        @media (max-width: 600px) {
+          #skills {
+            padding: 2.5rem 0 !important;
+          }
+          .skill-cat-card {
+            padding: 0.9rem 1rem !important;
+            border-radius: 14px !important;
+          }
+          .skills-tiles-grid {
+            grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)) !important;
+            gap: 0.75rem !important;
+          }
+          .skill-tile {
+            min-height: 100px !important;
+            padding: 0.95rem 0.5rem !important;
+            border-radius: 14px !important;
+          }
+        }
+        @media (max-width: 360px) {
+          .skills-tiles-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 0.65rem !important;
           }
         }
       `}</style>

@@ -53,6 +53,8 @@ export const AskHarshilChat: React.FC = () => {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const launcherRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom of conversation
   const scrollToBottom = useCallback(() => {
@@ -75,6 +77,41 @@ export const AskHarshilChat: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
+  // Click or touch outside panel and launcher closes panel
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleOutsideInteraction = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node | null;
+      if (!target) return;
+
+      // Inside chat panel -> keep open for interactions
+      if (panelRef.current && panelRef.current.contains(target)) {
+        return;
+      }
+
+      // Inside launcher button -> let launcher's own onClick handle toggle
+      if (launcherRef.current && launcherRef.current.contains(target)) {
+        return;
+      }
+
+      // Outside -> close
+      setIsOpen(false);
+    };
+
+    // Small delay prevents immediate close from the event that triggered the opening
+    const timer = setTimeout(() => {
+      document.addEventListener('mousedown', handleOutsideInteraction);
+      document.addEventListener('touchstart', handleOutsideInteraction, { passive: true });
+    }, 20);
+
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener('mousedown', handleOutsideInteraction);
+      document.removeEventListener('touchstart', handleOutsideInteraction);
+    };
   }, [isOpen]);
 
   // Send message to server-side Gemini endpoint
@@ -440,11 +477,13 @@ export const AskHarshilChat: React.FC = () => {
     <>
       {/* Floating Launcher Button */}
       <div
+        ref={launcherRef}
+        className="talk-launcher-wrapper"
         style={{
           position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          zIndex: 9998
+          bottom: 'calc(20px + env(safe-area-inset-bottom, 0px))',
+          right: 'calc(20px + env(safe-area-inset-right, 0px))',
+          zIndex: 99998
         }}
       >
         <button
@@ -505,27 +544,30 @@ export const AskHarshilChat: React.FC = () => {
       {/* Compact Chat Panel */}
       {isOpen && (
         <div
+          ref={panelRef}
           className="talk-panel"
           style={{
             position: 'fixed',
-            bottom: '76px',
-            right: '20px',
-            width: '360px',
-            maxWidth: 'calc(100vw - 24px)',
-            height: '490px',
-            maxHeight: 'calc(100dvh - 100px)',
+            bottom: 'calc(76px + env(safe-area-inset-bottom, 0px))',
+            right: 'calc(20px + env(safe-area-inset-right, 0px))',
+            width: '370px',
+            maxWidth: 'calc(100vw - 28px)',
+            height: '520px',
+            maxHeight: 'calc(100dvh - 96px - env(safe-area-inset-bottom, 0px))',
             backgroundColor: '#FFFFFF',
             border: '2.5px solid var(--border-dark)',
             borderRadius: '18px',
             boxShadow: '4px 4px 0px var(--border-dark)',
-            zIndex: 9999,
+            zIndex: 99999,
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
+            overscrollBehavior: 'contain',
             animation: 'chatPanelPop 0.18s cubic-bezier(0.16, 1, 0.3, 1)'
           }}
           role="dialog"
           aria-label="Talk with Harshil"
+          onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
           <div
@@ -640,10 +682,13 @@ export const AskHarshilChat: React.FC = () => {
 
           {/* Scrollable Conversation Area */}
           <div
+            className="talk-messages-area"
             style={{
               flex: 1,
               overflowY: 'auto',
               overflowX: 'hidden',
+              WebkitOverflowScrolling: 'touch',
+              overscrollBehavior: 'contain',
               padding: '0.75rem',
               display: 'flex',
               flexDirection: 'column',
@@ -1068,13 +1113,65 @@ export const AskHarshilChat: React.FC = () => {
           }
         }
 
+        .talk-launcher-wrapper {
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          isolation: isolate;
+        }
+
+        .talk-panel {
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          isolation: isolate;
+          overscroll-behavior: contain;
+        }
+
+        .talk-messages-area {
+          -webkit-overflow-scrolling: touch !important;
+          overscroll-behavior: contain !important;
+        }
+
+        @keyframes chatPanelPop {
+          from {
+            opacity: 0;
+            transform: translate3d(0, 8px, 0) scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+          }
+        }
+
         @media (max-width: 480px) {
+          .talk-launcher-wrapper {
+            bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+            right: 14px !important;
+          }
+          .talk-launcher-btn {
+            height: 44px !important;
+            padding: 0 0.75rem !important;
+            font-size: 0.8rem !important;
+          }
           .talk-panel {
-            width: calc(100vw - 24px) !important;
-            right: 12px !important;
-            bottom: 74px !important;
-            max-height: calc(100dvh - 90px) !important;
-            height: calc(100dvh - 90px) !important;
+            width: calc(100vw - 20px) !important;
+            right: 10px !important;
+            bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important;
+            max-height: calc(100dvh - 80px - env(safe-area-inset-bottom, 0px)) !important;
+            height: min(500px, calc(100dvh - 80px - env(safe-area-inset-bottom, 0px))) !important;
+            border-radius: 16px !important;
+          }
+          .talk-panel textarea {
+            font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
+          }
+          .talk-chip-btn {
+            min-height: 38px !important;
+            display: flex !important;
+            align-items: center !important;
+            font-size: 0.76rem !important;
           }
         }
 

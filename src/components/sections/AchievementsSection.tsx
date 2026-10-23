@@ -38,6 +38,7 @@ export const AchievementsSection: React.FC = () => {
         </div>
 
         <div
+          className="achievements-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
@@ -47,6 +48,7 @@ export const AchievementsSection: React.FC = () => {
           {achievements.map((item, index) => (
             <div
               key={item.title}
+              className="achievement-card"
               style={{
                 backgroundColor: '#FFFFFF',
                 border: '2.5px solid var(--border-dark)',
@@ -141,6 +143,22 @@ export const AchievementsSection: React.FC = () => {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 600px) {
+          #achievements {
+            padding: 2.25rem 0 !important;
+          }
+          .achievements-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1.25rem !important;
+          }
+          .achievement-card {
+            padding: 1.25rem 1rem !important;
+            border-radius: 16px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };

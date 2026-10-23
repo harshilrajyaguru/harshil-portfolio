@@ -11,6 +11,7 @@ html {
   font-size: 16px;
   background-color: var(--bg-canvas);
   color: var(--text-main);
+  overflow-x: hidden;
 }
 
 body {
@@ -234,4 +235,38 @@ h1, h2, h3, h4, h5, h6 {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--bg-yellow);
+}
+
+/* Responsive container and section divider adjustments for mobile & small screens */
+@media (max-width: 600px) {
+  .content-container {
+    padding: 0 1rem;
+  }
+  .section-divider {
+    margin: 2.5rem 0 1.5rem 0;
+    gap: 0.75rem;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    width: 25px;
+  }
+  .section-title {
+    font-size: 1.45rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .content-container {
+    padding: 0 0.75rem;
+  }
+  .section-title {
+    font-size: 1.35rem;
+  }
+}
+
+/* Touch and mobile safe area adjustments */
+@media (hover: none) and (pointer: coarse) {
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
 }

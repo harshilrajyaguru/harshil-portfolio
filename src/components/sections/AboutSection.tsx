@@ -93,6 +93,7 @@ export const AboutSection: React.FC<AboutSectionProps> = () => {
 
             {/* Resume Button + Handwritten Signature (Matching reference layout) */}
             <div
+              className="about-actions"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -108,12 +109,14 @@ export const AboutSection: React.FC<AboutSectionProps> = () => {
                 download={personal.resumeFilename}
                 icon={<FileText size={18} strokeWidth={2.5} />}
                 title="Download Harshil's Resume"
+                style={{ minHeight: '44px' }}
               >
                 My Resume
               </NeoButton>
 
               {/* Hand-drawn Signature matching reference's "Halim Yusuf" */}
               <div
+                className="about-signature"
                 style={{
                   fontFamily: 'var(--font-hand)',
                   fontSize: '2.4rem',
@@ -136,6 +139,14 @@ export const AboutSection: React.FC<AboutSectionProps> = () => {
           .about-grid {
             grid-template-columns: 1fr !important;
             gap: 2rem !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .about-actions {
+            gap: 1.25rem !important;
+          }
+          .about-signature {
+            font-size: 1.9rem !important;
           }
         }
       `}</style>

@@ -25,6 +25,7 @@ export const ContactBanner: React.FC = () => {
       <div className="content-container">
         {/* Darker green contact CTA band (Matching reference directly) */}
         <div
+          className="contact-card"
           style={{
             backgroundColor: 'var(--bg-green-cta)',
             border: '3px solid var(--border-dark)',
@@ -126,7 +127,7 @@ export const ContactBanner: React.FC = () => {
             </div>
 
             {/* CTAs: Direct Mailto + Call Me + Copy Email */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', alignItems: 'center' }}>
+            <div className="contact-actions" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', alignItems: 'center' }}>
               <NeoButton
                 variant="primary"
                 size="lg"
@@ -145,12 +146,14 @@ export const ContactBanner: React.FC = () => {
                 href={portfolioData.personal.phoneCallUrl}
                 icon={<Phone size={20} strokeWidth={2.5} />}
                 title={`Call Harshil at ${portfolioData.personal.phone}`}
+                className="contact-cta-btn"
               >
                 Call Me
               </NeoButton>
 
               <button
                 onClick={handleCopyEmail}
+                className="contact-copy-btn"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -165,7 +168,8 @@ export const ContactBanner: React.FC = () => {
                   borderRadius: '14px',
                   cursor: 'pointer',
                   backdropFilter: 'blur(5px)',
-                  transition: 'var(--transition-tactile)'
+                  transition: 'var(--transition-tactile)',
+                  minHeight: '44px'
                 }}
                 title="Copy email to clipboard"
               >
@@ -181,6 +185,36 @@ export const ContactBanner: React.FC = () => {
         @media (max-width: 768px) {
           .doodle-arrow {
             display: none;
+          }
+        }
+        @media (max-width: 600px) {
+          #contact {
+            padding: 2.25rem 0 1.5rem 0 !important;
+          }
+          .contact-card {
+            padding: 2.25rem 1.25rem !important;
+            border-radius: 20px !important;
+            gap: 1.25rem !important;
+          }
+          .contact-actions {
+            gap: 0.75rem !important;
+            width: 100%;
+          }
+          .contact-copy-btn {
+            max-width: 100%;
+            font-size: 0.8rem !important;
+            padding: 0.75rem 1rem !important;
+            word-break: break-all;
+          }
+        }
+        @media (max-width: 380px) {
+          .contact-actions {
+            flex-direction: column;
+            width: 100%;
+          }
+          .contact-actions > * {
+            width: 100% !important;
+            justify-content: center !important;
           }
         }
       `}</style>

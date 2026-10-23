@@ -60,11 +60,12 @@ export const HeroSection: React.FC = () => {
                 margin: 0
               }}
             >
-              {personal.firstName} <br />
+              <span style={{ whiteSpace: 'nowrap' }}>{personal.firstName}</span> <br />
               <span
                 style={{
                   position: 'relative',
-                  display: 'inline-block'
+                  display: 'inline-block',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 {personal.lastName}
@@ -105,7 +106,7 @@ export const HeroSection: React.FC = () => {
             </p>
 
             {/* Action Buttons */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem', marginTop: '0.75rem' }}>
+            <div className="hero-actions" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem', marginTop: '0.75rem' }}>
               <NeoButton
                 variant="primary"
                 size="lg"
@@ -113,6 +114,7 @@ export const HeroSection: React.FC = () => {
                 external={true}
                 onClick={triggerConfetti}
                 icon={<Mail size={18} strokeWidth={2.5} />}
+                className="hero-btn"
               >
                 Say Hello
               </NeoButton>
@@ -123,6 +125,7 @@ export const HeroSection: React.FC = () => {
                 href={personal.phoneCallUrl}
                 icon={<Phone size={18} strokeWidth={2.5} />}
                 title={`Call Harshil at ${personal.phone}`}
+                className="hero-btn"
               >
                 Call Me
               </NeoButton>
@@ -132,13 +135,15 @@ export const HeroSection: React.FC = () => {
                 size="lg"
                 href="#projects"
                 icon={<ArrowDownRight size={18} strokeWidth={2.5} />}
+                className="hero-btn"
               >
                 My Work
               </NeoButton>
             </div>
 
-            {/* Vertical Scroll Down Indicator */}
+            {/* Vertical Scroll Down Indicator (Desktop) */}
             <div
+              className="hero-scroll-indicator hero-scroll-desktop"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -260,24 +265,124 @@ export const HeroSection: React.FC = () => {
                 </a>
               )}
             </div>
+
+            {/* Vertical Scroll Down Indicator (Mobile: Positioned at the very end of hero content) */}
+            <div
+              className="hero-scroll-indicator hero-scroll-mobile"
+              style={{
+                alignItems: 'center',
+                gap: '0.65rem',
+                marginTop: '1.75rem',
+                color: 'var(--text-muted)'
+              }}
+            >
+              <div
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  border: '2px solid var(--border-dark)',
+                  backgroundColor: '#FFFFFF',
+                  boxShadow: '2px 2px 0px var(--border-dark)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <Mouse size={16} strokeWidth={2.5} color="var(--text-main)" />
+              </div>
+              <span
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.75rem',
+                  fontWeight: 800,
+                  letterSpacing: '0.15em',
+                  textTransform: 'uppercase'
+                }}
+              >
+                SCROLL DOWN · EXPLORE ARCHITECTURES
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       <style>{`
+        @media (min-width: 901px) {
+          .hero-scroll-mobile {
+            display: none !important;
+          }
+        }
+
         @media (max-width: 900px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
             text-align: center;
-          }
-          .hero-grid h1 {
-            font-size: 2.8rem !important;
+            gap: 2rem !important;
           }
           .hero-grid > div:first-child {
             align-items: center;
           }
           .hero-grid p {
             margin: 0 auto;
+          }
+          .hero-actions {
+            justify-content: center;
+          }
+          .hero-scroll-desktop {
+            display: none !important;
+          }
+          .hero-scroll-mobile {
+            display: flex !important;
+            justify-content: center;
+            margin-top: 1.5rem !important;
+          }
+        }
+
+        @media (max-width: 600px) {
+          #home {
+            padding-top: 1.75rem !important;
+            padding-bottom: 2rem !important;
+          }
+          .hero-grid h1 {
+            font-size: clamp(2.35rem, 8.5vw, 3.2rem) !important;
+          }
+          .hero-actions {
+            gap: 0.75rem !important;
+          }
+          .hero-btn {
+            min-height: 44px !important;
+            padding: 0.65rem 1.15rem !important;
+            font-size: 0.95rem !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-scroll-indicator {
+            gap: 0.5rem !important;
+          }
+          .hero-scroll-indicator span {
+            font-size: 0.68rem !important;
+            letter-spacing: 0.08em !important;
+          }
+        }
+
+        @media (max-width: 380px) {
+          .hero-grid h1 {
+            font-size: clamp(2.05rem, 8vw, 2.4rem) !important;
+          }
+          .hero-actions {
+            flex-direction: column;
+            width: 100%;
+            gap: 0.65rem !important;
+          }
+          .hero-btn {
+            width: 100% !important;
+            justify-content: center !important;
+          }
+          .hero-scroll-indicator span {
+            font-size: 0.62rem !important;
+            letter-spacing: 0.04em !important;
           }
         }
       `}</style>

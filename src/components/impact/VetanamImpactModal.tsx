@@ -209,6 +209,7 @@ export const VetanamImpactModal: React.FC<VetanamImpactModalProps> = ({ isOpen, 
 
   return (
     <div
+      className="impact-modal-overlay"
       style={{
         position: 'fixed',
         inset: 0,
@@ -224,6 +225,7 @@ export const VetanamImpactModal: React.FC<VetanamImpactModalProps> = ({ isOpen, 
       onClick={onClose}
     >
       <div
+        className="impact-modal-card"
         style={{
           backgroundColor: '#FFFFFF',
           border: '3px solid var(--border-dark)',
@@ -261,7 +263,7 @@ export const VetanamImpactModal: React.FC<VetanamImpactModalProps> = ({ isOpen, 
             transition: 'var(--transition-tactile)',
             zIndex: 10
           }}
-          className="impact-icon-btn"
+          className="impact-icon-btn impact-close-btn"
           title="Close Impact Overlay (Esc)"
           aria-label="Close"
         >
@@ -326,6 +328,7 @@ export const VetanamImpactModal: React.FC<VetanamImpactModalProps> = ({ isOpen, 
 
         {/* 1. TOP TOOLBAR CONTROLS — Only [ Before ] [ After ] [ Replay ↻ ] */}
         <div
+          className="impact-toolbar"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -491,6 +494,7 @@ export const VetanamImpactModal: React.FC<VetanamImpactModalProps> = ({ isOpen, 
 
           {/* Draggable Vertical Divider Line */}
           <div
+            className="comparison-divider"
             style={{
               position: 'absolute',
               top: 0,
@@ -501,7 +505,8 @@ export const VetanamImpactModal: React.FC<VetanamImpactModalProps> = ({ isOpen, 
               backgroundColor: 'var(--border-dark)',
               zIndex: 10,
               cursor: isAnimating ? 'wait' : 'ew-resize',
-              pointerEvents: isAnimating ? 'none' : 'auto'
+              pointerEvents: isAnimating ? 'none' : 'auto',
+              touchAction: 'none'
             }}
             onMouseDown={handleMouseDown}
             onTouchStart={handleTouchStart}
@@ -519,8 +524,8 @@ export const VetanamImpactModal: React.FC<VetanamImpactModalProps> = ({ isOpen, 
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '42px',
-                height: '42px',
+                width: '44px',
+                height: '44px',
                 borderRadius: '50%',
                 backgroundColor: '#FFFFFF',
                 border: '2.5px solid var(--border-dark)',
@@ -529,6 +534,7 @@ export const VetanamImpactModal: React.FC<VetanamImpactModalProps> = ({ isOpen, 
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: isAnimating ? 'wait' : 'ew-resize',
+                touchAction: 'none',
                 transition: 'transform 0.15s ease'
               }}
               className="divider-thumb"
@@ -578,8 +584,53 @@ export const VetanamImpactModal: React.FC<VetanamImpactModalProps> = ({ isOpen, 
         }
 
         @media (max-width: 768px) {
+          .impact-modal-overlay {
+            padding: 0.5rem !important;
+          }
+          .impact-modal-card {
+            padding: 1.15rem 0.85rem !important;
+            border-radius: 18px !important;
+            max-height: 94vh !important;
+            gap: 0.85rem !important;
+          }
+          .impact-close-btn {
+            top: 0.75rem !important;
+            right: 0.75rem !important;
+            width: 36px !important;
+            height: 36px !important;
+          }
           .comparison-container {
-            min-height: 540px !important;
+            min-height: 500px !important;
+            height: min(540px, 60vh) !important;
+            border-radius: 14px !important;
+          }
+          .comparison-panel {
+            padding: 0.85rem 0.65rem !important;
+            -webkit-overflow-scrolling: touch !important;
+          }
+          .impact-cards-grid {
+            grid-template-columns: 1fr !important;
+            gap: 0.65rem !important;
+          }
+          .toolbar-btn {
+            min-height: 40px !important;
+            padding: 0.4rem 0.75rem !important;
+            font-size: 0.8rem !important;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .impact-toolbar {
+            padding: 0.5rem !important;
+            gap: 0.4rem !important;
+          }
+          .toolbar-btn {
+            padding: 0.35rem 0.55rem !important;
+            font-size: 0.76rem !important;
+          }
+          .divider-thumb {
+            width: 40px !important;
+            height: 40px !important;
           }
         }
 
@@ -641,6 +692,7 @@ function renderBeforeContent(animStep: number, replayKey: number) {
 
       {/* Interactive Simulation Grid of 4 Failure Modes */}
       <div
+        className="impact-cards-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
@@ -965,6 +1017,7 @@ function renderAfterContent(animStep: number, replayKey: number) {
 
       {/* Pipeline Architecture Cards */}
       <div
+        className="impact-cards-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',

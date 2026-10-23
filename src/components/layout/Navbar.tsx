@@ -15,9 +15,26 @@ export const Navbar: React.FC<NavbarProps> = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    const handleResize = () => {
+      if (window.innerWidth > 900 && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [mobileMenuOpen]);
 
   const navLinks = [
     { label: 'Home', href: '#home' },
@@ -181,14 +198,35 @@ export const Navbar: React.FC<NavbarProps> = () => {
             borderRadius: '10px',
             boxShadow: '2px 2px 0px var(--border-dark)',
             padding: '0.45rem',
+            minWidth: '44px',
+            minHeight: '44px',
+            alignItems: 'center',
+            justifyContent: 'center',
             cursor: 'pointer'
           }}
           className="mobile-hamburger-btn"
-          aria-label="Toggle navigation menu"
+          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileMenuOpen}
         >
           {mobileMenuOpen ? <X size={24} strokeWidth={2.5} /> : <Menu size={24} strokeWidth={2.5} />}
         </button>
       </div>
+
+      {/* Mobile Drawer Backdrop Overlay */}
+      {mobileMenuOpen && (
+        <div
+          onClick={() => setMobileMenuOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(18, 24, 38, 0.4)',
+            backdropFilter: 'blur(3px)',
+            zIndex: 998
+          }}
+          className="mobile-drawer-backdrop"
+          aria-hidden="true"
+        />
+      )}
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
@@ -198,15 +236,18 @@ export const Navbar: React.FC<NavbarProps> = () => {
             top: '68px',
             left: 0,
             right: 0,
+            maxHeight: 'calc(100vh - 75px)',
+            overflowY: 'auto',
+            WebkitOverflowScrolling: 'touch',
             backgroundColor: 'var(--bg-canvas)',
             borderBottom: '3px solid var(--border-dark)',
-            boxShadow: '0 8px 0 rgba(0,0,0,0.1)',
-            padding: '1.5rem',
+            boxShadow: '0 12px 24px rgba(0,0,0,0.18)',
+            padding: '1.25rem 1.25rem 2rem 1.25rem',
             zIndex: 999
           }}
           className="mobile-drawer"
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '440px', margin: '0 auto' }}>
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -218,14 +259,18 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 style={{
                   textDecoration: 'none',
                   fontFamily: 'var(--font-display)',
-                  fontSize: '1.2rem',
+                  fontSize: '1.15rem',
                   fontWeight: 800,
                   color: 'var(--text-main)',
-                  padding: '0.6rem 1rem',
+                  padding: '0.65rem 1rem',
+                  minHeight: '44px',
+                  display: 'flex',
+                  alignItems: 'center',
                   borderRadius: '12px',
                   border: '2px solid var(--border-dark)',
                   backgroundColor: '#FFFFFF',
-                  boxShadow: '3px 3px 0px var(--border-dark)'
+                  boxShadow: '3px 3px 0px var(--border-dark)',
+                  transition: 'var(--transition-tactile)'
                 }}
               >
                 {link.label}
@@ -233,26 +278,30 @@ export const Navbar: React.FC<NavbarProps> = () => {
             ))}
 
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
-              <NeoButton
-                variant="lilac"
-                size="md"
-                className="w-full"
-                href={portfolioData.personal.resumeUrl}
-                download={portfolioData.personal.resumeFilename}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Resume
-              </NeoButton>
-              <NeoButton
-                variant="primary"
-                size="md"
-                className="w-full"
-                href={portfolioData.personal.contactUrl}
-                external={true}
-                icon={<Mail size={16} />}
-              >
-                Say Hello
-              </NeoButton>
+              <div style={{ flex: 1 }}>
+                <NeoButton
+                  variant="lilac"
+                  size="md"
+                  style={{ width: '100%', minHeight: '44px' }}
+                  href={portfolioData.personal.resumeUrl}
+                  download={portfolioData.personal.resumeFilename}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Resume
+                </NeoButton>
+              </div>
+              <div style={{ flex: 1 }}>
+                <NeoButton
+                  variant="primary"
+                  size="md"
+                  style={{ width: '100%', minHeight: '44px' }}
+                  href={portfolioData.personal.contactUrl}
+                  external={true}
+                  icon={<Mail size={16} />}
+                >
+                  Say Hello
+                </NeoButton>
+              </div>
             </div>
           </div>
         </div>
@@ -260,12 +309,26 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
       {/* Media query styling for navbar */}
       <style>{`
-        @media (max-width: 820px) {
+        .desktop-nav {
+          gap: clamp(1rem, 1.8vw, 1.75rem) !important;
+        }
+        @media (max-width: 900px) {
           .desktop-nav, .desktop-actions {
             display: none !important;
           }
           .mobile-hamburger-btn {
             display: flex !important;
+          }
+        }
+        @media (max-width: 480px) {
+          header a[href="#home"] {
+            font-size: 1.25rem !important;
+            gap: 0.5rem !important;
+          }
+        }
+        @media (max-width: 360px) {
+          header a[href="#home"] {
+            font-size: 1.15rem !important;
           }
         }
       `}</style>

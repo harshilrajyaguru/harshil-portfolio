@@ -14,10 +14,11 @@ export const Footer: React.FC<FooterProps> = () => {
   const socials = portfolioData.personal.socials;
 
   return (
-    <footer style={{ padding: '3rem 0 2rem 0' }}>
+    <footer style={{ padding: '3rem 0 calc(6rem + env(safe-area-inset-bottom, 0px)) 0' }}>
       <div className="content-container">
         {/* White brutalist footer card container (Matching reference) */}
         <div
+          className="footer-card"
           style={{
             backgroundColor: '#FFFFFF',
             border: '2.5px solid var(--border-dark)',
@@ -105,7 +106,7 @@ export const Footer: React.FC<FooterProps> = () => {
             </div>
 
             {/* Circular Social Buttons (Matching reference) */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            <div className="footer-social-row" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap' }}>
               {socials.github && (
                 <a
                   href={socials.github}
@@ -272,6 +273,32 @@ export const Footer: React.FC<FooterProps> = () => {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 600px) {
+          footer {
+            padding: 2rem 0 calc(5.75rem + env(safe-area-inset-bottom, 0px)) 0 !important;
+          }
+          .footer-card {
+            padding: 1.5rem 1.25rem !important;
+            border-radius: 20px !important;
+          }
+          .footer-card > div:first-child {
+            gap: 1.25rem !important;
+            margin-bottom: 1.5rem !important;
+          }
+          .footer-social-row {
+            gap: 0.65rem !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .footer-social-row a,
+          .footer-social-row button {
+            width: 42px !important;
+            height: 42px !important;
+          }
+        }
+      `}</style>
     </footer>
   );
 };

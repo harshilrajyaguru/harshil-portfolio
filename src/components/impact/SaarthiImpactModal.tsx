@@ -290,6 +290,7 @@ export const SaarthiImpactModal: React.FC<SaarthiImpactModalProps> = ({ isOpen, 
 
   return (
     <div
+      className="impact-modal-overlay"
       style={{
         position: 'fixed',
         inset: 0,
@@ -305,6 +306,7 @@ export const SaarthiImpactModal: React.FC<SaarthiImpactModalProps> = ({ isOpen, 
       onClick={onClose}
     >
       <div
+        className="impact-modal-card"
         style={{
           backgroundColor: '#FFFFFF',
           border: '3px solid var(--border-dark)',
@@ -342,7 +344,7 @@ export const SaarthiImpactModal: React.FC<SaarthiImpactModalProps> = ({ isOpen, 
             transition: 'var(--transition-tactile)',
             zIndex: 10
           }}
-          className="impact-icon-btn"
+          className="impact-icon-btn impact-close-btn"
           title="Close Impact Overlay (Esc)"
           aria-label="Close"
         >
@@ -407,6 +409,7 @@ export const SaarthiImpactModal: React.FC<SaarthiImpactModalProps> = ({ isOpen, 
 
         {/* 1. TOP TOOLBAR CONTROLS — [ Before ] [ After ] [ Replay ↻ ] */}
         <div
+          className="impact-toolbar"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -589,7 +592,8 @@ export const SaarthiImpactModal: React.FC<SaarthiImpactModalProps> = ({ isOpen, 
               backgroundColor: 'var(--border-dark)',
               zIndex: 10,
               cursor: isAnimating ? 'wait' : 'ew-resize',
-              pointerEvents: isAnimating ? 'none' : 'auto'
+              pointerEvents: isAnimating ? 'none' : 'auto',
+              touchAction: 'none'
             }}
             onMouseDown={handleMouseDown}
             onTouchStart={handleTouchStart}
@@ -607,8 +611,8 @@ export const SaarthiImpactModal: React.FC<SaarthiImpactModalProps> = ({ isOpen, 
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '42px',
-                height: '42px',
+                width: '44px',
+                height: '44px',
                 borderRadius: '50%',
                 backgroundColor: '#FFFFFF',
                 border: '2.5px solid var(--border-dark)',
@@ -617,7 +621,8 @@ export const SaarthiImpactModal: React.FC<SaarthiImpactModalProps> = ({ isOpen, 
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: isAnimating ? 'wait' : 'ew-resize',
-                transition: 'transform 0.15s ease'
+                transition: 'transform 0.15s ease',
+                touchAction: 'none'
               }}
               className="divider-thumb"
             >
@@ -685,7 +690,80 @@ export const SaarthiImpactModal: React.FC<SaarthiImpactModalProps> = ({ isOpen, 
 
         @media (max-width: 820px) {
           .comparison-container {
-            min-height: 700px !important;
+            min-height: 520px !important;
+            height: min(600px, 66vh) !important;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .impact-modal-overlay {
+            padding: 0.5rem !important;
+          }
+          .impact-modal-card {
+            padding: 1.15rem 0.85rem !important;
+            border-radius: 18px !important;
+            max-height: 94vh !important;
+            gap: 0.85rem !important;
+          }
+          .impact-close-btn {
+            top: 0.75rem !important;
+            right: 0.75rem !important;
+            width: 36px !important;
+            height: 36px !important;
+          }
+          .comparison-container {
+            min-height: 480px !important;
+            height: min(540px, 60vh) !important;
+            border-radius: 14px !important;
+          }
+          .comparison-panel {
+            padding: 0.85rem 0.65rem !important;
+            -webkit-overflow-scrolling: touch !important;
+          }
+          .impact-cards-grid {
+            grid-template-columns: 1fr !important;
+            gap: 0.65rem !important;
+          }
+          .saarthi-problem-flow {
+            grid-template-columns: 1fr !important;
+            gap: 0.5rem !important;
+          }
+          .saarthi-workflow-stepper {
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 0.35rem !important;
+          }
+          .saarthi-specialist-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 0.45rem !important;
+          }
+          .toolbar-btn {
+            min-height: 40px !important;
+            padding: 0.4rem 0.75rem !important;
+            font-size: 0.8rem !important;
+          }
+        }
+
+        @media (max-width: 440px) {
+          .saarthi-workflow-stepper {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          .saarthi-specialist-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .impact-toolbar {
+            padding: 0.5rem !important;
+            gap: 0.4rem !important;
+          }
+          .toolbar-btn {
+            padding: 0.35rem 0.55rem !important;
+            font-size: 0.76rem !important;
+          }
+          .divider-thumb {
+            width: 40px !important;
+            height: 40px !important;
           }
         }
 
@@ -751,6 +829,7 @@ function renderBeforeContent(replayKey: number) {
 
       {/* 4 Concise Problem Cards */}
       <div
+        className="impact-cards-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
@@ -873,7 +952,7 @@ function renderBeforeContent(replayKey: number) {
         </div>
 
         {/* 3-Column Visual Flow: Inputs -> Independent Proposals (Collision) -> Unverified Delivery */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '0.65rem' }}>
+        <div className="saarthi-problem-flow" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '0.65rem' }}>
           {/* Column 1: Disconnected Inputs */}
           <div style={{ backgroundColor: '#FEF2F2', border: '1px solid #FCA5A5', borderRadius: '8px', padding: '0.6rem' }}>
             <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#991B1B', marginBottom: '0.35rem' }}>
@@ -1021,6 +1100,7 @@ function renderAfterContent(
 
       {/* Interactive 6-Stage Workflow Stepper Banner */}
       <div
+        className="saarthi-workflow-stepper"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
@@ -1125,6 +1205,7 @@ function renderAfterContent(
         </div>
 
         <div
+          className="saarthi-specialist-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(175px, 1fr))',

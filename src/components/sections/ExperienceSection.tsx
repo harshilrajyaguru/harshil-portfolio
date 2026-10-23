@@ -20,6 +20,7 @@ export const ExperienceSection: React.FC = () => {
             {experiences.map((exp: Experience) => (
               <div
                 key={exp.id}
+                className="exp-card"
                 style={{
                   backgroundColor: '#FFFFFF',
                   border: '2.5px solid var(--border-dark)',
@@ -110,6 +111,7 @@ export const ExperienceSection: React.FC = () => {
           {/* Right Column: Education & Institutional Standing */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
             <div
+              className="exp-card"
               style={{
                 backgroundColor: '#FFFFFF',
                 border: '2.5px solid var(--border-dark)',
@@ -209,6 +211,19 @@ export const ExperienceSection: React.FC = () => {
         @media (max-width: 900px) {
           .exp-grid {
             grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+          }
+        }
+        @media (max-width: 600px) {
+          #experience {
+            padding: 2.5rem 0 !important;
+          }
+          .exp-card {
+            padding: 1.25rem 1rem !important;
+            border-radius: 16px !important;
+          }
+          .exp-card h3 {
+            font-size: 1.2rem !important;
           }
         }
       `}</style>

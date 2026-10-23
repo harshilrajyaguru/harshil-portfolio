@@ -13,6 +13,7 @@ interface NeoButtonProps {
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   title?: string;
+  style?: React.CSSProperties;
 }
 
 export const NeoButton: React.FC<NeoButtonProps> = ({
@@ -27,7 +28,8 @@ export const NeoButton: React.FC<NeoButtonProps> = ({
   download,
   disabled = false,
   type = 'button',
-  title
+  title,
+  style
 }) => {
   const sizeStyles = {
     sm: 'text-xs py-1.5 px-3',
@@ -63,6 +65,7 @@ export const NeoButton: React.FC<NeoButtonProps> = ({
         target={isExternal ? '_blank' : undefined}
         rel={isExternal ? 'noopener noreferrer' : undefined}
         title={title}
+        style={style}
       >
         {content}
       </a>
@@ -76,6 +79,7 @@ export const NeoButton: React.FC<NeoButtonProps> = ({
       className={combinedClass}
       disabled={disabled}
       title={title}
+      style={style}
     >
       {content}
     </button>

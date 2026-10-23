@@ -448,8 +448,8 @@ export const HeroIllustration: React.FC = () => {
           line-height: 1;
         }
 
-        /* Desktop & Tablet: Floating Around the OUTSIDE Perimeter */
-        @media (min-width: 641px) {
+        /* Desktop: Floating Around the OUTSIDE Perimeter */
+        @media (min-width: 901px) {
           .star-badges-layer {
             position: absolute;
             inset: 0;
@@ -485,45 +485,213 @@ export const HeroIllustration: React.FC = () => {
           }
         }
 
-        /* Mobile Screens (<= 640px): Clean Flow Below Illustration */
-        @media (max-width: 640px) {
+        /* Tablets (641px - 900px): Bounded Floating Badges to Prevent Collisions */
+        @media (min-width: 641px) and (max-width: 900px) {
           .hero-illustration-wrapper {
-            max-width: 330px;
-            margin: 1.25rem auto 1rem auto;
-            flex-direction: column;
+            max-width: 420px;
           }
 
-          .tech-tag-center {
+          .star-badges-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+          }
+
+          .star-pill-badge {
+            position: absolute;
+          }
+
+          .star-pos-s {
+            top: -18px;
+            left: -8px;
+          }
+
+          .star-pos-t {
+            top: -18px;
+            right: -8px;
+          }
+
+          .star-pos-a {
+            bottom: 40px;
+            left: -8px;
+          }
+
+          .star-pos-r {
+            bottom: 40px;
+            right: -8px;
+          }
+        }
+
+        /* Mobile Screens (<= 640px): Surrounding Badges with Perfect Layering */
+        @media (max-width: 640px) {
+          .hero-illustration-wrapper {
+            max-width: min(345px, 92vw);
+            margin: 1.5rem auto 1.85rem auto;
             position: relative;
-            bottom: auto;
-            left: auto;
-            transform: none;
-            margin: 0.85rem auto 0 auto;
-            display: inline-flex;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .swe-letters-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+          }
+
+          .harshil-portrait-frame {
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 65%;
+            max-width: 235px;
+            pointer-events: none;
+            z-index: 2;
+          }
+
+          .star-badges-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+          }
+
+          .star-pill-badge {
+            position: absolute;
+            pointer-events: auto;
+            height: 28px;
+            padding: 2px 8px;
+            gap: 5px;
+            border-radius: 8px;
+            border-width: 2px;
+            box-shadow: 2px 2px 0px var(--border-dark, #121826);
+          }
+
+          .star-pill-circle {
+            width: 17px;
+            height: 17px;
+            font-size: 0.65rem;
+          }
+
+          .star-pill-text {
+            font-size: 0.7rem;
+            font-weight: 800;
+          }
+
+          /* Situation (Upper-Left edge of illustration) */
+          .star-pos-s {
+            top: 2px;
+            left: 0px;
+          }
+
+          /* Task (Upper-Right edge of illustration) */
+          .star-pos-t {
+            top: 2px;
+            right: 0px;
+          }
+
+          /* Action (Lower-Left edge of illustration) */
+          .star-pos-a {
+            bottom: 22px;
+            left: 0px;
+          }
+
+          /* Result (Lower-Right edge of illustration) */
+          .star-pos-r {
+            bottom: 22px;
+            right: 0px;
+          }
+
+          /* Technical Label (DISTRIBUTED SYSTEMS pill centered at bottom) */
+          .tech-tag-center {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0;
+            padding: 5px 14px;
+            gap: 6px;
+            border-radius: 9999px;
+            z-index: 10;
             box-shadow: 2.5px 2.5px 0px rgba(18, 24, 38, 0.45);
           }
 
           .tech-tag-center:hover {
-            transform: translateY(-2px);
+            transform: translateX(-50%) translateY(-2px);
           }
 
-          .star-badges-layer {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.55rem;
-            width: 100%;
+          .tech-tag-icon {
+            font-size: 0.76rem;
+          }
+
+          .tech-tag-text {
+            font-size: 0.72rem;
+          }
+        }
+
+        /* Narrow Phones (<= 360px): Ultra-Compact Scale */
+        @media (max-width: 360px) {
+          .hero-illustration-wrapper {
             max-width: 280px;
-            margin: 0.85rem auto 0 auto;
-            position: static;
-            pointer-events: auto;
+            margin: 1.25rem auto 1.65rem auto;
+          }
+
+          .harshil-portrait-frame {
+            width: 64%;
+            max-width: 185px;
           }
 
           .star-pill-badge {
-            position: static;
-            width: 100%;
-            justify-content: center;
-            height: 36px;
-            padding: 4px 8px;
+            height: 25px;
+            padding: 2px 6px;
+            gap: 4px;
+            border-radius: 7px;
+          }
+
+          .star-pill-circle {
+            width: 15px;
+            height: 15px;
+            font-size: 0.6rem;
+          }
+
+          .star-pill-text {
+            font-size: 0.65rem;
+          }
+
+          .star-pos-s {
+            top: 1px;
+            left: 0px;
+          }
+
+          .star-pos-t {
+            top: 1px;
+            right: 0px;
+          }
+
+          .star-pos-a {
+            bottom: 18px;
+            left: 0px;
+          }
+
+          .star-pos-r {
+            bottom: 18px;
+            right: 0px;
+          }
+
+          .tech-tag-center {
+            bottom: -13px;
+            padding: 4px 10px;
+            gap: 5px;
+          }
+
+          .tech-tag-icon {
+            font-size: 0.68rem;
+          }
+
+          .tech-tag-text {
+            font-size: 0.65rem;
+            letter-spacing: 0.04em;
           }
         }
 

@@ -14,6 +14,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
   return (
     <div
+      className="resume-modal-overlay"
       style={{
         position: 'fixed',
         inset: 0,
@@ -28,6 +29,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
       onClick={onClose}
     >
       <div
+        className="resume-modal-card"
         style={{
           backgroundColor: '#FFFFFF',
           border: '3px solid #121826',
@@ -199,6 +201,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
         {/* Modal Footer Controls */}
         <div
+          className="resume-modal-footer"
           style={{
             marginTop: '1.75rem',
             paddingTop: '1.25rem',
@@ -238,6 +241,28 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 600px) {
+          .resume-modal-overlay {
+            padding: 0.75rem !important;
+          }
+          .resume-modal-card {
+            padding: 1.25rem 1rem !important;
+            border-radius: 18px !important;
+            max-height: 94vh !important;
+          }
+          .resume-modal-footer {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 0.75rem !important;
+          }
+          .resume-modal-footer > * {
+            width: 100% !important;
+            justify-content: center !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

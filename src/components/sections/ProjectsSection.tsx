@@ -43,7 +43,7 @@ export const ProjectsSection: React.FC = () => {
 
           <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
             {/* Top Bar: Inbound Transfers -> OCC Lock */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem' }}>
               <span
                 style={{
                   fontFamily: 'var(--font-mono)',
@@ -91,7 +91,7 @@ export const ProjectsSection: React.FC = () => {
               </div>
 
               {/* Pipeline Nodes */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem', textAlign: 'center' }}>
+              <div className="vetanam-nodes-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem', textAlign: 'center' }}>
                 <div style={{ backgroundColor: '#EDE9FE', border: '1.5px solid var(--border-dark)', borderRadius: '8px', padding: '0.5rem' }}>
                   <Zap size={16} style={{ margin: '0 auto', color: '#6D28D9' }} />
                   <div style={{ fontSize: '0.7rem', fontWeight: 800 }}>Redis / BullMQ</div>
@@ -157,7 +157,7 @@ export const ProjectsSection: React.FC = () => {
           />
 
           <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem' }}>
               <span
                 style={{
                   fontFamily: 'var(--font-mono)',
@@ -698,6 +698,33 @@ export const ProjectsSection: React.FC = () => {
           .project-card-grid {
             grid-template-columns: 1fr !important;
             gap: 1.5rem !important;
+          }
+        }
+        @media (max-width: 600px) {
+          #projects {
+            padding: 2.5rem 0 !important;
+          }
+          .project-card {
+            padding: 1.25rem 1rem !important;
+            border-radius: 18px !important;
+          }
+          .project-card h3 {
+            font-size: clamp(1.4rem, 5.5vw, 1.85rem) !important;
+          }
+          .project-action-btn {
+            min-height: 42px;
+            font-size: 0.88rem !important;
+            padding: 0.5rem 0.85rem !important;
+          }
+        }
+        @media (max-width: 360px) {
+          .vetanam-nodes-grid {
+            grid-template-columns: 1fr !important;
+            gap: 0.4rem !important;
+          }
+          .project-action-btn {
+            flex: 1 1 100%;
+            justify-content: center;
           }
         }
       `}</style>

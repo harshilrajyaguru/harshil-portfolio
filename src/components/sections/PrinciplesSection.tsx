@@ -665,8 +665,8 @@ export const PrinciplesSection: React.FC = () => {
 
       {/* Scoped CSS for 3D Circular Coverflow Carousel */}
       <style>{`
-        /* Responsive design tokens for 3D circular carousel */
-        :root {
+        /* Responsive design tokens for 3D circular carousel scoped to section */
+        #principles {
           --hi-card-width: 360px;
           --hi-offset-x: 255px;
           --hi-rot-y: 14deg;
@@ -676,7 +676,7 @@ export const PrinciplesSection: React.FC = () => {
         }
 
         @media (max-width: 860px) {
-          :root {
+          #principles {
             --hi-card-width: 330px;
             --hi-offset-x: 215px;
             --hi-rot-y: 12deg;
@@ -687,9 +687,9 @@ export const PrinciplesSection: React.FC = () => {
         }
 
         @media (max-width: 600px) {
-          :root {
-            --hi-card-width: min(310px, 78vw);
-            --hi-offset-x: min(150px, 36vw);
+          #principles {
+            --hi-card-width: min(300px, 78vw);
+            --hi-offset-x: min(130px, 32vw);
             --hi-rot-y: 8deg;
             --hi-scale: 0.78;
             --hi-opacity: 0.45;
@@ -698,11 +698,11 @@ export const PrinciplesSection: React.FC = () => {
         }
 
         @media (max-width: 380px) {
-          :root {
-            --hi-card-width: 270px;
-            --hi-offset-x: 115px;
+          #principles {
+            --hi-card-width: min(260px, 80vw);
+            --hi-offset-x: 80px;
             --hi-rot-y: 6deg;
-            --hi-scale: 0.75;
+            --hi-scale: 0.74;
             --hi-opacity: 0.4;
             --hi-blur: 2.5px;
           }
@@ -889,6 +889,46 @@ export const PrinciplesSection: React.FC = () => {
         .carousel-dot:focus-visible {
           outline: 2px solid var(--bg-yellow);
           outline-offset: 2px;
+        }
+
+        @media (max-width: 600px) {
+          #principles {
+            padding: 2.75rem 0 3.25rem 0 !important;
+          }
+          .carousel-3d-stage {
+            height: 380px !important;
+          }
+          .carousel-3d-card {
+            padding: 1.35rem 1.25rem !important;
+            border-radius: 18px !important;
+          }
+          .carousel-3d-card h3 {
+            font-size: 1.2rem !important;
+            margin-bottom: 0.65rem !important;
+          }
+          .carousel-3d-card p {
+            font-size: 0.88rem !important;
+            line-height: 1.52 !important;
+          }
+        }
+
+        @media (max-width: 380px) {
+          .carousel-3d-stage {
+            height: 365px !important;
+          }
+          .carousel-3d-card {
+            padding: 1.15rem 1rem !important;
+          }
+          .carousel-3d-card h3 {
+            font-size: 1.12rem !important;
+          }
+          .carousel-3d-card p {
+            font-size: 0.825rem !important;
+            line-height: 1.45 !important;
+          }
+          .carousel-dot {
+            height: 5px !important;
+          }
         }
 
         @media (prefers-reduced-motion: reduce) {

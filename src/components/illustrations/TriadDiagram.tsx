@@ -2,7 +2,7 @@ import React from 'react';
 
 export const TriadDiagram: React.FC = () => {
   return (
-    <div style={{ position: 'relative', width: '100%', maxWidth: '340px', margin: '0 auto' }}>
+    <div className="triad-diagram-wrapper" style={{ position: 'relative', width: '100%', maxWidth: '340px', margin: '0 auto' }}>
       <svg
         viewBox="0 0 340 300"
         style={{ width: '100%', height: 'auto', overflow: 'visible' }}
@@ -154,6 +154,13 @@ export const TriadDiagram: React.FC = () => {
           EXECUTION
         </text>
       </svg>
+      <style>{`
+        @media (max-width: 360px) {
+          .triad-diagram-wrapper {
+            max-width: 275px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };
