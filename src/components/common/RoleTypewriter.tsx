@@ -16,29 +16,13 @@ const PAUSE_BEFORE_NEXT = 250; // ms to pause after deleting before next role
 
 export const RoleTypewriter: React.FC = () => {
   const [roleIndex, setRoleIndex] = useState<number>(0);
-  const [charIndex, setCharIndex] = useState<number>(0);
+  const [charIndex, setCharIndex] = useState<number>(ROLES[0].length);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState<boolean>(false);
-
-  // Check and respect prefers-reduced-motion
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setPrefersReducedMotion(e.matches);
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
 
   // Continuous typewriter animation cycle
   useEffect(() => {
-    if (prefersReducedMotion) return;
-
     const currentRole = ROLES[roleIndex];
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setTimeout>;
 
     if (!isDeleting) {
       if (charIndex < currentRole.length) {
@@ -68,10 +52,10 @@ export const RoleTypewriter: React.FC = () => {
     }
 
     return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, roleIndex, prefersReducedMotion]);
+  }, [charIndex, isDeleting, roleIndex]);
 
   const currentRole = ROLES[roleIndex];
-  const displayedText = prefersReducedMotion ? ROLES[0] : currentRole.slice(0, charIndex);
+  const displayedText = currentRole.slice(0, charIndex);
 
   return (
     <div
@@ -83,11 +67,9 @@ export const RoleTypewriter: React.FC = () => {
       <div className="role-typewriter-wrapper">
         <span className="role-syntax-prefix">$ role = &quot;</span>
         <span className="role-typewriter-text">{displayedText}</span>
-        {!prefersReducedMotion && (
-          <span className="role-typewriter-caret" aria-hidden="true">
-            |
-          </span>
-        )}
+        <span className="role-typewriter-caret" aria-hidden="true">
+          |
+        </span>
         <span className="role-syntax-suffix">&quot;</span>
       </div>
 
@@ -153,12 +135,6 @@ export const RoleTypewriter: React.FC = () => {
             font-size: 0.76rem;
             min-width: 260px;
             letter-spacing: 0.05em;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .role-typewriter-caret {
-            display: none !important;
           }
         }
       `}</style>
